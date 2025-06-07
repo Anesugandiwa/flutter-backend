@@ -24,7 +24,7 @@ class ProfileController extends Controller
     {
         // Validate input
         $validated = $request->validate([
-            'phone_number' => 'required|string|exists:users,phone_number',
+            // 'phone_number' => 'required|string|exists:users,phone_number',
 
             // Basic Info
             'bio' => 'nullable|string',
@@ -59,11 +59,12 @@ class ProfileController extends Controller
         ]);
 
         // Find user by phone number
-        $user = User::where('phone_number', $validated['phone_number'])->first();
+        // $user = User::where('phone_number', $validated['phone_number'])->first();
 
         // Create profile
         $profile = new Profile();
-        $profile->user_id = $user->id;
+        $profile->user_id = null;
+        // $user->id
 
         // Fill fields
         $fields = [

@@ -13,8 +13,9 @@ class PreferenceController extends Controller
      */
     public function index()
     {
-        $preferences = Preference::with('user')->get();
-        return response()->json($preferences);
+        // $preferences = Preference::with('user')->get();
+        // return response()->json($preferences);
+        return Preference::all();
     }
 
     /**
@@ -23,7 +24,7 @@ class PreferenceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'phone_number' => 'required|string|exists:users,phone_number',
+            
             'looking_for' => 'nullable|in:friendship,dating,long-term relationship,casual,unsure',
             'preferred_gender' => 'nullable|in:male,female,non-binary,any',
             'preferred_country' => 'nullable|string',
@@ -43,14 +44,14 @@ class PreferenceController extends Controller
             'preferred_love_language' => 'nullable|in:touch,gifts,compliments,thoughtful_gestures,time_together,any',
         ]);
 
-        $user = User::where('phone_number', $request->phone_number)->first();
+        // $user = User::where('looking_for', $request->looking_for)->first();
 
-        if ($user->preference) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Preference already exists for this user.',
-            ], 409);
-        }
+        // if ($user->preference) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Preference already exists for this user.',
+        //     ], 409);
+        // }
 
         $preferenceData = $request->only([
             'looking_for',
@@ -72,7 +73,8 @@ class PreferenceController extends Controller
             'preferred_love_language',
         ]);
 
-        $preferenceData['user_id'] = $user->id;
+        $preferenceData['user_id'] =null; 
+        //  $user->id
 
         $preference = Preference::create($preferenceData);
 

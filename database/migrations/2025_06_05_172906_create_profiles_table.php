@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
 
             // Basic Info
             $table->text('bio')->nullable();
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
-            $table->point('location')->nullable(); // for geospatial search
+            $table->string('location')->nullable(); // for geospatial search
 
             // Physical attributes (aligns with preferences)
             $table->integer('height')->nullable(); // store as cm
